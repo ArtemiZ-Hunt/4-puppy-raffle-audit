@@ -1,4 +1,108 @@
-# High
+---
+title: Protocol Audit Report
+author: ArtemiZ
+date: August 14, 2024
+header-includes:
+  - \usepackage{titling}
+  - \usepackage{graphicx}
+---
+
+\begin{titlepage}
+    \centering
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{logo.pdf} 
+    \end{figure}
+    \vspace*{2cm}
+    {\Huge\bfseries Protocol Audit Report\par}
+    \vspace{1cm}
+    {\Large Version 1.0\par}
+    \vspace{2cm}
+    {\Large\itshape Cyfrin.io\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\maketitle
+
+<!-- Your report starts here! -->
+
+Prepared by: [Cyfrin](ArtemiZ)
+Lead Auditors: 
+- ArtemiZ
+
+# Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Protocol Summary](#protocol-summary)
+- [Disclaimer](#disclaimer)
+- [Risk Classification](#risk-classification)
+- [Audit Details](#audit-details)
+  - [Scope](#scope)
+  - [Roles](#roles)
+- [Executive Summary](#executive-summary)
+  - [Issues found](#issues-found)
+- [Findings](#findings)
+- [High](#high)
+- [Medium](#medium)
+- [Low](#low)
+- [Informational](#informational)
+- [Gas](#gas)
+
+# Protocol Summary
+
+This project is to enter a raffle to win a cute dog NFT. The protocol should do the following:
+
+# Disclaimer
+
+The ArtemiZ team makes all effort to find as many vulnerabilities in the code in the given time period, but holds no responsibilities for the findings provided in this document. A security audit by the team is not an endorsement of the underlying business or product. The audit was time-boxed and the review of the code was solely on the security aspects of the Solidity implementation of the contracts.
+
+# Risk Classification
+
+|            |        | Impact |        |     |
+| ---------- | ------ | ------ | ------ | --- |
+|            |        | High   | Medium | Low |
+|            | High   | H      | H/M    | M   |
+| Likelihood | Medium | H/M    | M      | M/L |
+|            | Low    | M      | M/L    | L   |
+
+We use the [CodeHawks](https://docs.codehawks.com/hawks-auditors/how-to-evaluate-a-finding-severity) severity matrix to determine severity. See the documentation for more details.
+
+# Audit Details 
+
+Commit Hash:
+
+```
+e30d199697bbc822b646d76533b66b7d529b8ef5
+```
+
+## Scope 
+
+```
+./src/
+-- PuppyRaffle.sol
+```
+
+## Roles
+
+- Owner 
+
+- Deployer of the protocol, has the power to change the wallet address to which fees are sent through the changeFeeAddress function. Player 
+
+- Participant of the raffle, has the power to enter the raffle with the enterRaffle function and refund value through refund function.
+
+# Executive Summary
+## Issues found
+
+| Severity | Number of issues found |
+| -------- | ---------------------- |
+| High     | 3                      |
+| Medium   | 3                      |
+| Low      | 1                      |
+| Info     | 9                      |
+| Total    | 16                     |
+
+# Findings
+## High
 
 ### [H-1] Reentrancy attack in `PuppyRaffle:refund` allows entrant to drain raffle balance
 
@@ -243,7 +347,7 @@ Place the following test into `PuppyRaffleTest.t.sol`.
 ```
 There are more attack vectors with that final require, so we recommend removing it regardless. 
 
-# Medium
+## Medium
 
 ### [M-1] Looping through players array to check for duplicates in `PuppyRaffle::enterRaflle` is a potential denial of service(DoS) attack, incrementing gas costs for future entrants
 
@@ -483,7 +587,7 @@ There are a few options to mitigate this issue.
 
 Pull >> Push
 
-# Low
+## Low
 
 ### [L-1] `PuppyRaffle::getActivePlayerIndex`returns 0 for non-existent players and for players at index 0, causing a player at index 0 to incorectly think they have not entered the raffle
 
@@ -521,7 +625,7 @@ You could also reserve the 0th position for any competition, but a better soluti
 
 
 
-# Gas
+## Gas
 
 ### [G-1] Unchanged state variable should be declared constant or immutable.
 
@@ -560,9 +664,9 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 - Found in src/PuppyRaffle.sol [Line: 2](src/PuppyRaffle.sol#L2)
 
-	```solidity
-	pragma solidity ^0.7.6;
-	```
+    ```solidity
+    pragma solidity ^0.7.6;
+    ```
 
 </details>
 
@@ -587,15 +691,15 @@ Check for `address(0)` when assigning values to address state variables.
 
 - Found in src/PuppyRaffle.sol [Line: 69](src/PuppyRaffle.sol#L69)
 
-	```solidity
-	        feeAddress = _feeAddress;
-	```
+    ```solidity
+            feeAddress = _feeAddress;
+    ```
 
 - Found in src/PuppyRaffle.sol [Line: 224](src/PuppyRaffle.sol#L224)
 
-	```solidity
-	        feeAddress = newFeeAddress;
-	```
+    ```solidity
+            feeAddress = newFeeAddress;
+    ```
 
 </details>
 

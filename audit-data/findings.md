@@ -560,9 +560,9 @@ Consider using a specific version of Solidity in your contracts instead of a wid
 
 - Found in src/PuppyRaffle.sol [Line: 2](src/PuppyRaffle.sol#L2)
 
-	```solidity
-	pragma solidity ^0.7.6;
-	```
+    ```solidity
+    pragma solidity ^0.7.6;
+    ```
 
 </details>
 
@@ -587,15 +587,15 @@ Check for `address(0)` when assigning values to address state variables.
 
 - Found in src/PuppyRaffle.sol [Line: 69](src/PuppyRaffle.sol#L69)
 
-	```solidity
-	        feeAddress = _feeAddress;
-	```
+    ```solidity
+            feeAddress = _feeAddress;
+    ```
 
 - Found in src/PuppyRaffle.sol [Line: 224](src/PuppyRaffle.sol#L224)
 
-	```solidity
-	        feeAddress = newFeeAddress;
-	```
+    ```solidity
+            feeAddress = newFeeAddress;
+    ```
 
 </details>
 
